@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 app.use(express.json());
 
-// ================= PROMETHEUS =================
+
 client.collectDefaultMetrics();
 
 const httpRequestsTotal = new client.Counter({
@@ -33,7 +33,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// ================= DATABASE =================
+
 const db = new sqlite3.Database('./database.db');
 
 db.run(`
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS products (
 )
 `);
 
-// ================= AUTH =================
+
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
 
@@ -111,7 +111,7 @@ function auth(req, res, next) {
     }
 }
 
-// ================= PRODUCTS =================
+
 app.get('/products', auth, (req, res) => {
     db.all("SELECT * FROM products", [], (err, rows) => {
         if (err) return res.status(500).json({ error: err.message });
@@ -148,7 +148,7 @@ app.delete('/products/:id', auth, (req, res) => {
     });
 });
 
-// ================= MONITORING =================
+
 app.get('/health', (req, res) => {
     res.json({
         status: "OK",
@@ -162,7 +162,7 @@ app.get('/metrics', async (req, res) => {
     res.end(await client.register.metrics());
 });
 
-// ================= START =================
+
 app.listen(4000, () => {
     console.log("CRM Server started on http://localhost:4000");
 });

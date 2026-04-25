@@ -1,6 +1,5 @@
 const API = "http://localhost:4000";
 
-// ================= ЗАГРУЗКА =================
 async function load() {
     const token = localStorage.getItem('token');
 
@@ -38,13 +37,11 @@ async function load() {
         list.appendChild(row);
     });
 
-    // 📊 СТАТИСТИКА
     document.getElementById("count").innerText = data.length;
     document.getElementById("items").innerText = totalItems;
     document.getElementById("value").innerText = totalValue + " ₽";
 }
 
-// ================= ДОБАВИТЬ =================
 async function addProduct() {
     const token = localStorage.getItem('token');
 
@@ -77,7 +74,6 @@ async function addProduct() {
     load();
 }
 
-// ================= УДАЛИТЬ =================
 async function removeProduct(id) {
     const token = localStorage.getItem('token');
 
@@ -91,13 +87,11 @@ async function removeProduct(id) {
     load();
 }
 
-// ================= LOGOUT =================
 function logout() {
     localStorage.removeItem("token");
     window.location.href = "/login.html";
 }
 
-// ================= INIT =================
 window.onload = () => {
     const token = localStorage.getItem('token');
 
